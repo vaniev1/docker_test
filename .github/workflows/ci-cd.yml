@@ -17,10 +17,10 @@ jobs:
           curl -s http://localhost:8000/random | grep -q "number"
 
 
-deploy:
-  needs: test
-  runs-on: ubuntu-latest
-  steps:
-    - uses: action/checkout@v3
-    - name: Run Docker
-      run: docker-compose up -d  
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v3
+      - name: Run Docker
+        run: docker-compose up -d  
