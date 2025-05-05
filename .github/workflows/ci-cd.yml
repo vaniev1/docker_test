@@ -1,0 +1,26 @@
+name: CI/CD Pipeline
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with: 
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Test API
+        run: |
+          curl -s http://localhost:8000/random | grep -q "number"
+
+
+deploy:
+  needs: test
+  runs-on: ubuntu-latest
+  steps:
+    - uses: action/checkout@v3
+    - name: Run Docker
+      run: docker-compose up -d  
